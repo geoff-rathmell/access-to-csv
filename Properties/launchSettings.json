@@ -1,0 +1,24 @@
+{
+  "profiles": {
+    "test1.accdb": {
+      "commandName": "Project",
+      "commandLineArgs": "-c -p -clean \"-s:F:\\mdbtocsv_testing\\test1.accdb\""
+    },
+    "test2_2013_format.mdb": {
+      "commandName": "Project",
+      "commandLineArgs": "-c -p -clean \"-s:F:\\mdbtocsv_testing\\test2_2013_format.mdb\""
+    },
+    "forecast-cw": {
+      "commandName": "Project",
+      "commandLineArgs": "-t -clean \"-s:F:\\mdbtocsv_testing\\sdbv1_forecast-cw.mdb\""
+    },
+    "inventory-cw": {
+      "commandName": "Project",
+      "commandLineArgs": "-clean \"-s:F:\\mdbtocsv_testing\\sdbv1_store_inventory-cw.mdb\""
+    },
+    "sales-l4-appendfile": {
+      "commandName": "Project",
+      "commandLineArgs": "--add-filename -clean \"-s:F:\\mdbtocsv_testing\\sdbv1_sales_weekly-l4.mdb\""
+    }
+  }
+}
