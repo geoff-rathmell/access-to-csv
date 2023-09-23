@@ -12,7 +12,6 @@ using System.Runtime.Versioning;
 using System.IO;
 using System.Collections.Generic;
 using System;
-using System.Threading;
 
 namespace mdbtocsv
 {
