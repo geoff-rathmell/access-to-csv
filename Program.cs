@@ -23,7 +23,6 @@ namespace mdbtocsv
             Config.InitApplicationVariables();
 
             var assembly = Assembly.GetExecutingAssembly();
-            var assemblyName = assembly.GetName().Name ?? "MDBTOCSV";
             var assemblyVersion = assembly.GetName().Version ?? new Version();
 
             System.IO.FileInfo fi = new(assembly.Location);
