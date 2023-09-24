@@ -29,18 +29,24 @@ namespace mdbtocsv
             Config.OutputDirectory = fi.DirectoryName!;
 
             var log_file = fi.DirectoryName + Path.DirectorySeparatorChar + "mdbtocsv_log.txt";
-            Debug.Print($"LogFilename: {log_file}");
             Log.Init(log_file);
             Log.TrimLogFile();
 
-            Console.WriteLine($"********** MDB To CSV {assemblyVersion.Major}.{assemblyVersion.Minor}.{assemblyVersion.Build} **********");
-            Log.WriteToLogFile($"********** MDB To CSV {assemblyVersion.Major}.{assemblyVersion.Minor}.{assemblyVersion.Build} **********");
-            Console.WriteLine($"*");
-            Console.WriteLine($"* BASE2 Software - https://bentonvillebase2.com");
-            Console.WriteLine($"*");
-            Console.WriteLine($"************************************");
+            Config.OptionsFilename = $"{fi.DirectoryName!}{Path.DirectorySeparatorChar}.config";
+            
+            Log.WriteToLogFile($"############### MDB To CSV {assemblyVersion.Major}.{assemblyVersion.Minor}.{assemblyVersion.Build} ###############", true);
+            Console.WriteLine($"#");
+            Console.WriteLine($"# BASE2 Software - https://bentonvillebase2.com");
+            Console.WriteLine($"#");
+            Console.WriteLine($"# Contact - geoff@bentonvillebase2.com");
+            Console.WriteLine($"#");
+            Console.WriteLine($"################################################");
+            Console.WriteLine();
 
             #region PROCESS_ARGS
+
+            // load custom config file first if exists. Params over-write any params.
+            Config.LoadConfigFile(Config.OptionsFilename);
 
             // process all command line parameters
             if (args.Length > 0)
@@ -55,14 +61,14 @@ namespace mdbtocsv
                     if (args[i].ToLower() == "-nolog")
                     {
                         Console.WriteLine("* startup param: disabling log...");
-                        Config.GenerateLogFile = false;
+                        Config.EnableLogFile = false;
                     }
                     else if (args[i].ToLower().StartsWith("-s:"))
                     {
                         var fileName = args[i][3..] ?? "";
                         if (File.Exists(fileName))
                         {
-                            Log.WriteToLogFile($"* startup param: SOURCE_FILENAME={fileName.ToLower()}", true);
+                            Log.WriteToLogFile($"* startup param: FILE_TO_PROCESS={fileName.ToLower()}", true);
                             Config.FileToProcess = fileName;
                             Config.OutputDirectory = Path.GetDirectoryName(fileName) ?? string.Empty;
                         }
@@ -116,7 +122,7 @@ namespace mdbtocsv
                     {
                         Log.WriteToLogFile("* startup param: DEBUG Mode => ENABLED", true);
                         Config.DEBUGMODE = true;
-                        Config.GenerateLogFile = true;
+                        Config.EnableLogFile = true;
                     }
                     else if (args[i].ToLower() == "-t")
                     {
@@ -142,6 +148,16 @@ namespace mdbtocsv
                     {
                         Log.WriteToLogFile("* startup param: Add source filename as column to output file(s) option => ENABLED.", true);
                         Config.AddFilenameAsOutputField = true;
+                    }
+                    else if (args[i].ToLower().StartsWith("--options-file:"))
+                    {
+                        Config.OptionsFilename = args[i][15..];
+                        if(!File.Exists(Config.OptionsFilename)) 
+                        {
+                            Log.WriteToLogFile($"Warning: Custom options file not found:{Config.OptionsFilename}", true);
+                            Config.OptionsFilename = string.Empty;
+                        }
+                        Log.WriteToLogFile($"* startup param: OPTIONS_FILE:{Config.OptionsFilename.ToLower()}", true);
                     }
                     else if (args[i].ToLower().Contains('?') || args[i].ToLower().Contains("-help"))
                     {
@@ -179,6 +195,12 @@ namespace mdbtocsv
             }
 
             #endregion
+
+
+            if(Config.OptionsFilename.Length > 0)
+            {
+                Config.LoadConfigFile(Config.OptionsFilename);
+            }
 
             Console.WriteLine();
 

@@ -8,11 +8,16 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <StartupObject>mdbtocsv.Mdbtocsv</StartupObject>
     <Platforms>AnyCPU;x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="System.Data.Odbc" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extras\" />
   </ItemGroup>
 
 </Project>

@@ -19,6 +19,10 @@
     "sales-l4-appendfile": {
       "commandName": "Project",
       "commandLineArgs": "--add-filename -clean \"-s:F:\\mdbtocsv_testing\\sdbv1_sales_weekly-l4.mdb\""
+    },
+    "test2 with cust config1": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--options-file:C:\\Users\\digit\\source\\repos\\mdbtocsv\\Extras\\.config\" \"-s:F:\\mdbtocsv_testing\\test2_2013_format.mdb\""
     }
   }
 }
