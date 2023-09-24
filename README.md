@@ -23,7 +23,7 @@ The above example will extract all tables in source file as separate CSVs using 
 |OPTION|DESCRIPTION|
 |----- | ----- |
 |-s:\<sourceFileName\> | (required) The Access file to process. Wrap in quotes if you have spaces in the path.|
-|--options-file:\<filename\>|| \(optional\) Provide a custom options file path. Uses app directory .config by default.
+|--options-file:\<filename\>|\(optional\) Provide a custom options filename. Looks for a **.config** file in App Path by default. This file is only required to over-ride default behaviour|
 |-nooverwrite | \(optional\) Disables file over-write of output file. (Not Implemented)|
 |-o:\<directory\> | \(optional\) user specified output directory. Default = same path as source file.|
 |-filter:\<table_filter\> | \(optional\) Filters output tables to match provided string. (case insensitive)|
