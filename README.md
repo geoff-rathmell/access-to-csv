@@ -26,7 +26,7 @@ The above example will extract all tables in source file as separate CSVs using 
 |--options-file:\<filename\>|\(optional\) Provide a custom options filename. Looks for a **.config** file in App Path by default. This file is only required to over-ride default behaviour|
 |-nooverwrite | \(optional\) Disables file over-write of output file. (Not Implemented)|
 |-o:\<directory\> | \(optional\) user specified output directory. Default = same path as source file.|
-|-filter:\<table_filter\> | \(optional\) Filters output tables to match provided string. (case insensitive)|
+|-filter:\<table_filter\> | \(optional\) Filters output tables to match provided string. (case in-sensitive)|
 |-nolog | \(optional\) disables the runtime log. Set this as very first parameter to fully disable log. (Not Implemented)|
 |-lower | \(optional\) force output filenames to be lowercase.|
 |-upper | \(optional\) force output filenames to be UPPERCASE.|
