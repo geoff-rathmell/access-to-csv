@@ -6,8 +6,6 @@ This utility is a Windows console app that reads an Access file (mdb|accdb) and 
 
 Code published from a Visual Studio C# project on dotnet6.
 
-#### mdbtocsv is still work in progress.
-
 ### Prerequisites 
 - 64 bit ODBC Access Driver installed
 - Windows 7+
