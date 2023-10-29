@@ -23,6 +23,14 @@
     "test2 with cust config1": {
       "commandName": "Project",
       "commandLineArgs": "\"--options-file:C:\\Users\\digit\\source\\repos\\mdbtocsv\\Extras\\.config\" \"-s:F:\\mdbtocsv_testing\\test2_2013_format.mdb\""
+    },
+    "location_details": {
+      "commandName": "Project",
+      "commandLineArgs": "-clean \"-s:F:\\SWARMDB_DATA\\etl_data\\walmart\\shared_data\\sdbv1_location_store_detail.mdb\""
+    },
+    "whse_details": {
+      "commandName": "Project",
+      "commandLineArgs": "-clean \"-s:F:\\SWARMDB_DATA\\etl_data\\walmart\\shared_data\\sdbv1_location_whse_detail.mdb\""
     }
   }
 }
