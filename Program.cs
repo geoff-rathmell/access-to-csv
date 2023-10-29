@@ -91,7 +91,7 @@ namespace mdbtocsv
                             Log.WriteToLogFile($"* using default path. {Config.OutputDirectory}", true);
                         }
                     }
-                    else if (args[i].ToLower().StartsWith("-filter:"))
+                    else if (args[i].ToLower().StartsWith("--filter:"))
                     {
                         try
                         {
@@ -103,22 +103,22 @@ namespace mdbtocsv
                             Config.TableFilterMask = string.Empty;
                         }
                     }
-                    else if (args[i].ToLower() == "-nooverwrite")
+                    else if (args[i].ToLower() == "--nooverwrite")
                     {
                         Log.WriteToLogFile("* startup param: File over-write option => DISABLED", true);
                         Config.AllowOverWrite = false;
                     }
-                    else if (args[i].ToLower() == "-lower")
+                    else if (args[i].ToLower() == "--lower")
                     {
                         Log.WriteToLogFile("* startup param: Output filenames as lowercase => ENABLED", true);
                         Config.FileNameCaseToUse = Config.FileNameCase.lower;
                     }
-                    else if (args[i].ToLower() == "-upper")
+                    else if (args[i].ToLower() == "--upper")
                     {
                         Log.WriteToLogFile("* startup param: Output filenames as UPPERcase => ENABLED", true);
                         Config.FileNameCaseToUse = Config.FileNameCase.upper;
                     }
-                    else if (args[i].ToLower() == "-debug")
+                    else if (args[i].ToLower() == "--debug")
                     {
                         Log.WriteToLogFile("* startup param: DEBUG Mode => ENABLED", true);
                         Config.DEBUGMODE = true;
@@ -134,7 +134,7 @@ namespace mdbtocsv
                         Log.WriteToLogFile("* startup param: Using PIPE Delimiter.", true);
                         Config.DelimiterToUse = Config.CSVDelimiter.pipe;
                     }
-                    else if (args[i].ToLower() == "-clean")
+                    else if (args[i].ToLower() == "--clean")
                     {
                         Log.WriteToLogFile("* startup param: Field Name cleanup option => ENABLED.", true);
                         Config.CleanFieldNames = true;
@@ -169,16 +169,16 @@ namespace mdbtocsv
                         Console.WriteLine("");
                         Console.WriteLine("OPTIONS:");
                         Console.WriteLine("-s:<sourceFileName> : required file parameter. <filemask>.mdb files will be processed.");
-                        Console.WriteLine("-noprompt : disables the 'Continue' prompt. Program will run without the need for user interaction.");
+                        Console.WriteLine("--noprompt : disables the 'Continue' prompt. Program will run without the need for user interaction.");
                         Console.WriteLine("-o:output_path : user specified output path. Default = current folder.");
-                        Console.WriteLine("-filter:table_filter_pattern : If provided, filters output to tables which match text (case insensitive)");
+                        Console.WriteLine("--filter:table_filter_pattern : If provided, filters output to tables which match text (case insensitive)");
 
-                        Console.WriteLine("-nolog : disables the runtime log. !!! Set as very first parameter to fully disable log.");
-                        Console.WriteLine("-lower : force all filenames to be lowercase.");
+                        Console.WriteLine("--nolog : disables the runtime log. !!! Set as very first parameter to fully disable log.");
+                        Console.WriteLine("--lower : force all filenames to be lowercase.");
 
                         Console.WriteLine("-p : use PIPE '|' Delimiter in output file.");
                         Console.WriteLine("-t : use TAB Delimiter in output file.");
-                        Console.WriteLine("-clean : Replaces all symbol chars with '_' and converts FieldName to UPPER case");
+                        Console.WriteLine("--clean : Replaces all symbol chars with '_' and converts FieldName to UPPER case");
                         Console.WriteLine("--add-date : Appends source file create date to output file(s).");
                         Console.WriteLine("--add-filename : Appends source filename as last column in output file(s).");
                         Console.WriteLine("-debug : enables debug 'verbose' mode.");
