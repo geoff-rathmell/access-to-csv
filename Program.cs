@@ -47,6 +47,7 @@ namespace mdbtocsv
 
             // load custom config file first if exists. Params over-write any params.
             Config.LoadConfigFile(Config.OptionsFilename);
+            Console.WriteLine();
 
             // process all command line parameters
             if (args.Length > 0)
@@ -149,15 +150,29 @@ namespace mdbtocsv
                         Log.WriteToLogFile("* startup param: Add source filename as column to output file(s) option => ENABLED.", true);
                         Config.AddFilenameAsOutputField = true;
                     }
+                    else if (args[i].ToLower() == "--no-archive")
+                    {
+                        Log.WriteToLogFile("* startup param: Source File Archive option => DISABLED.", true);
+                        Config.ArchiveEnabled = false;
+                    }
                     else if (args[i].ToLower().StartsWith("--options-file:"))
                     {
                         Config.OptionsFilename = args[i][15..];
-                        if(!File.Exists(Config.OptionsFilename)) 
+                        Log.WriteToLogFile($"* startup param: OPTIONS_FILE:{Config.OptionsFilename.ToLower()}", true);
+
+                        if (!File.Exists(Config.OptionsFilename))
                         {
                             Log.WriteToLogFile($"Warning: Custom options file not found:{Config.OptionsFilename}", true);
                             Config.OptionsFilename = string.Empty;
                         }
-                        Log.WriteToLogFile($"* startup param: OPTIONS_FILE:{Config.OptionsFilename.ToLower()}", true);
+                        else 
+                        {
+                            Console.WriteLine("");
+                            Log.WriteToLogFile($"INFO: Using Custom Options File. The default .config options will be over-ridden.", true);
+                            Config.LoadConfigFile(Config.OptionsFilename); // load the options file immediately. any other command line params will over-write the value
+                            Console.WriteLine();
+                        }
+                        
                     }
                     else if (args[i].ToLower().Contains('?') || args[i].ToLower().Contains("-help"))
                     {
@@ -181,6 +196,7 @@ namespace mdbtocsv
                         Console.WriteLine("--clean : Replaces all symbol chars with '_' and converts FieldName to UPPER case");
                         Console.WriteLine("--add-date : Appends source file create date to output file(s).");
                         Console.WriteLine("--add-filename : Appends source filename as last column in output file(s).");
+                        Console.WriteLine("--no-archive : Disables the Archive option, even if enabled in .config file.");
                         Console.WriteLine("-debug : enables debug 'verbose' mode.");
                         Console.WriteLine();
                         Console.WriteLine("Press Any Key To Continue.");
@@ -197,10 +213,7 @@ namespace mdbtocsv
             #endregion
 
 
-            if(Config.OptionsFilename.Length > 0)
-            {
-                Config.LoadConfigFile(Config.OptionsFilename);
-            }
+
 
             Console.WriteLine();
 
@@ -231,6 +244,7 @@ namespace mdbtocsv
             string FileToProcessForColumnData = Config.FileToProcess!.ToLower();
 
             List<string> mdbUserTableNames = new();
+
             string activeODBCDriverName = Util.GetOdbcAccessDriverName();
 
             if (activeODBCDriverName == null)
@@ -264,6 +278,7 @@ namespace mdbtocsv
                 }
 
                 Log.WriteToLogFile($"Found {mdbUserTableNames.Count} tables to process...", true);
+
 
                 foreach (string tableName in mdbUserTableNames)
                 {
@@ -387,9 +402,44 @@ namespace mdbtocsv
 
                     Util.WriteAt($"{rowsWritten:#,#} total rows written to output file.", new(0, 0));
                     Console.WriteLine("");
-
+                    
 
                 } // foreach table found
+
+                accODBCCon.Close();
+                // if we made it here, the output file should exist
+                if(Config.ArchiveEnabled)
+                {
+                    switch (Config.ArchiveMode)
+                    {
+                        case "zip":
+                            Console.WriteLine("");
+                            Util.ArchiveAndZipFile(Config.FileToProcess, Config.ArchiveSubDirectory);
+                            break;
+                        case "delete":
+                            try
+                            {
+                                File.Delete(Config.FileToProcess);
+                                Console.WriteLine("");
+                                Console.WriteLine($"INFO: source file: {Path.GetFileName(Config.FileToProcess)} DELETED successfully.");
+                            }
+                            catch (IOException)
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine("ERROR: Error occured trying to delete source file. File may be locked.");
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine("ERROR: Error occured trying to delete source file.");
+                            }
+
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                }
 
             }
             catch (Exception ex)

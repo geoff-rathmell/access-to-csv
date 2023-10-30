@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
@@ -139,6 +141,56 @@ namespace mdbtocsv_util
                 Console.Clear();
                 Console.WriteLine(e.Message);
             }
+        }
+
+        // <summary>
+        /// Create a zip file for a single file. Will place in a \archive subfolder from original directory unless subfolder value is modified.
+        /// The original file will be deleted after successfully archived.
+        /// </summary>
+        /// <param name="filename">The file to zip</param>
+        /// <param name="subFolderName">The subfolder to save the zip file to. Pass in empty string to archive in same folder.</param>
+        public static void ArchiveAndZipFile(string filename, string subFolderName = "archive")
+        {
+            if (File.Exists(filename))
+            {
+                FileInfo fi = new(filename);
+
+                string zipFileName;
+                if (string.IsNullOrEmpty(subFolderName))
+                    zipFileName = $"{Path.GetDirectoryName(fi.FullName)}{Path.DirectorySeparatorChar}{Path.GetFileNameWithoutExtension(fi.Name)}_{DateTime.Now.ToString("yyyy-MM-dd HH-mm")}.zip";
+                else
+                    zipFileName = $"{Path.GetDirectoryName(fi.FullName)}{Path.DirectorySeparatorChar}{subFolderName}{Path.DirectorySeparatorChar}{Path.GetFileNameWithoutExtension(fi.Name)}_{DateTime.Now.ToString("yyyy-MM-dd HH-mm")}.zip";
+
+
+                if (!Directory.Exists(Path.GetDirectoryName(zipFileName)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(zipFileName)!);
+
+                if (File.Exists(zipFileName))
+                    File.Delete(zipFileName);
+
+                try
+                {
+                    using ZipArchive archive = ZipFile.Open(zipFileName, ZipArchiveMode.Create);
+
+                    if (string.IsNullOrEmpty(subFolderName))
+                        Log.WriteToLogFile($"INFO: ARCHIVED {Path.GetFileName(fi.Name)} to {Path.GetFileName(zipFileName)}", true);
+                    else
+                        Log.WriteToLogFile($"INFO: ARCHIVED {Path.GetFileName(fi.Name)} to ./{subFolderName}/{Path.GetFileName(zipFileName)}", true);
+
+                    archive.CreateEntryFromFile(filename, Path.GetFileName(filename));
+                }
+                catch (Exception e)
+                {
+                    Log.WriteToLogFile($"ERROR! Caught error while archiving file: {filename}", true);
+                    Log.WriteToLogFile($"ERROR:ArchiveAndZipFile: CAUGHT {e.Message}");
+                }
+
+                if (File.Exists(zipFileName)) // delete the original file now.
+                {
+                    File.Delete(filename);
+                }
+            }
+
         }
     }
 

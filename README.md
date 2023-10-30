@@ -32,9 +32,9 @@ The above example will extract all tables in source file as separate CSVs using 
 |--add-filename | \(optional\) Adds source filename as last field in output file(s).|
 |-p | \(optional\) use PIPE '\|' Delimiter in output file.|
 |-t | \(optional\) use TAB Delimiter in output file.|
-|--clean | \(optional\) Clean Fieldnames. Replaces all symbol chars with '_' and convert FieldName to UPPER case|
+|--clean | \(optional\) Clean Fieldnames. Replaces all symbol chars with '_' and convert FieldName to UPPER case.|
 |--debug | \(optional\) enables debug 'verbose' mode.|
-|--archive| \(optional\) Archives as the source file as zip and delete. Only triggered if output was successfull|
+|--no-archive| \(optional\) Disables the Archive option, even if enabled in .config file.|
 
 **Example**
 
