@@ -42,7 +42,9 @@ namespace mdbtocsv
         public static string TableFilterMask { get; set; } = string.Empty;
         public static string OptionsFilename {  get; set; } = string.Empty;
 
-        private static bool IsConfigFileProcessed { get; set; } = false;
+        public static bool ArchiveEnabled { get; set; } = false;
+        public static string ArchiveSubDirectory {  get; set; } = string.Empty;
+        public static string ArchiveMode {  get; set; } = "zip";
 
         #endregion
 
@@ -64,6 +66,10 @@ namespace mdbtocsv
             AppendCreateDateToOutputFiles = false;
             AddFilenameAsOutputField = false;
             TableFilterMask = string.Empty;
+            ArchiveEnabled = false;
+            ArchiveSubDirectory = string.Empty;
+            ArchiveMode = "zip";
+
         }
 
         /// <summary>
@@ -74,9 +80,9 @@ namespace mdbtocsv
         {
             if (!string.IsNullOrWhiteSpace(configFile))
             {
-                if (File.Exists(configFile) && !IsConfigFileProcessed)
+                if (File.Exists(configFile))
                 {
-                    Log.WriteToLogFile($"{Environment.NewLine}# Using custom config file:{configFile.ToLower()}", true);
+                    Log.WriteToLogFile($"{Environment.NewLine}# Reading config file:{configFile.ToLower()}", true);
 
                     // TODO: add try catch in here
 
@@ -173,12 +179,36 @@ namespace mdbtocsv
                                     Log.WriteToLogFile($"* config param: TABLE_FILTER={lineDetails[1]}", true);
                                 }
                                 break;
+                            case "ENABLE_ARCHIVE":
+                                if (bool.TryParse(lineDetails[1], out boolResult))
+                                {
+                                    ArchiveEnabled = boolResult;
+                                    Log.WriteToLogFile($"* config param: ENABLE_ARCHIVE={lineDetails[1]}", true);
+                                }
+                                break;
+                            case "ARCHIVE_SUB_DIRECTORY":
+                                if (lineDetails[1].Length > 1 && lineDetails[1] != ".")
+                                {
+                                    ArchiveSubDirectory = lineDetails[1];
+                                    Log.WriteToLogFile($"* config param: ARCHIVE_SUB_DIRECTORY={lineDetails[1]}", true);
+                                }
+                                break;
+                            case "ARCHIVE_MODE":
+                                if (lineDetails[1].Length > 0 && (lineDetails[1].ToLower().Contains("zip") || lineDetails[1].ToLower().Contains("delete")) )
+                                {
+                                    ArchiveMode = lineDetails[1];
+                                    Log.WriteToLogFile($"* config param: ARCHIVE_MODE={lineDetails[1]}", true);
+                                }
+                                else
+                                {
+                                    Log.WriteToLogFile($"ERROR: INVALID config param: ARCHIVE_MODE={lineDetails[1]}");
+                                }
+                                break;
                             default:
                                 break;
                         }
                     }
 
-                    IsConfigFileProcessed = true;
                 }
             }
         }

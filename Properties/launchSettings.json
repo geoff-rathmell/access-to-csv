@@ -2,23 +2,23 @@
   "profiles": {
     "test1.accdb": {
       "commandName": "Project",
-      "commandLineArgs": "-c -p -clean \"-s:F:\\mdbtocsv_testing\\test1.accdb\""
+      "commandLineArgs": "-c -p --clean \"-s:F:\\mdbtocsv_testing\\test1.accdb\""
     },
     "test2_2013_format.mdb": {
       "commandName": "Project",
-      "commandLineArgs": "-c -p -clean \"-s:F:\\mdbtocsv_testing\\test2_2013_format.mdb\""
+      "commandLineArgs": "-c -p --clean \"-s:F:\\mdbtocsv_testing\\test2_2013_format.mdb\""
     },
     "forecast-cw": {
       "commandName": "Project",
-      "commandLineArgs": "-t -clean \"-s:F:\\mdbtocsv_testing\\sdbv1_forecast-cw.mdb\""
+      "commandLineArgs": "-t --clean \"-s:F:\\mdbtocsv_testing\\sdbv1_forecast-cw.mdb\""
     },
     "inventory-cw": {
       "commandName": "Project",
-      "commandLineArgs": "-clean \"-s:F:\\mdbtocsv_testing\\sdbv1_store_inventory-cw.mdb\""
+      "commandLineArgs": "--clean \"-s:F:\\mdbtocsv_testing\\sdbv1_store_inventory-cw.mdb\""
     },
     "sales-l4-appendfile": {
       "commandName": "Project",
-      "commandLineArgs": "--add-filename -clean \"-s:F:\\mdbtocsv_testing\\sdbv1_sales_weekly-l4.mdb\""
+      "commandLineArgs": "--add-filename --clean \"-s:F:\\mdbtocsv_testing\\sdbv1_sales_weekly-l4.mdb\""
     },
     "test2 with cust config1": {
       "commandName": "Project",
@@ -26,11 +26,19 @@
     },
     "location_details": {
       "commandName": "Project",
-      "commandLineArgs": "-clean \"-s:F:\\SWARMDB_DATA\\etl_data\\walmart\\shared_data\\sdbv1_location_store_detail.mdb\""
+      "commandLineArgs": "--clean \"-s:F:\\SWARMDB_DATA\\etl_data\\walmart\\shared_data\\sdbv1_location_store_detail.mdb\" \"--options-file:C:\\Users\\digit\\source\\repos\\mdbtocsv\\Extras\\.config\""
     },
     "whse_details": {
       "commandName": "Project",
-      "commandLineArgs": "-clean \"-s:F:\\SWARMDB_DATA\\etl_data\\walmart\\shared_data\\sdbv1_location_whse_detail.mdb\""
+      "commandLineArgs": "\"--options-file:C:\\Users\\digit\\source\\repos\\mdbtocsv\\Extras\\.config\" --clean \"-s:F:\\SWARMDB_DATA\\etl_data\\walmart\\shared_data\\sdbv1_location_whse_detail.mdb\" "
+    },
+    "whse_no_archive": {
+      "commandName": "Project",
+      "commandLineArgs": "--clean \"-s:F:\\SWARMDB_DATA\\etl_data\\walmart\\shared_data\\sdbv1_location_whse_detail.mdb\" --no-archive"
+    },
+    "whse_detail_force no archive": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--options-file:C:\\Users\\digit\\source\\repos\\mdbtocsv\\Extras\\.config\" --no-archive --clean \"-s:F:\\SWARMDB_DATA\\etl_data\\walmart\\shared_data\\sdbv1_location_whse_detail.mdb\""
     }
   }
 }

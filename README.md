@@ -22,19 +22,19 @@ The above example will extract all tables in source file as separate CSVs using 
 |----- | ----- |
 |-s:\<sourceFileName\> | (required) The Access file to process. Wrap in quotes if you have spaces in the path.|
 |--options-file:\<filename\>|\(optional\) Provide a custom options filename. Looks for a **.config** file in App Path by default. This file is only required to over-ride default behaviour|
-|-nooverwrite | \(optional\) Disables file over-write of output file. (Not Implemented)|
+|--nooverwrite | \(optional\) Disables file over-write of output file. (Not Implemented)|
 |-o:\<directory\> | \(optional\) user specified output directory. Default = same path as source file.|
-|-filter:\<table_filter\> | \(optional\) Filters output tables to match provided string. (case in-sensitive)|
-|-nolog | \(optional\) disables the runtime log. Set this as very first parameter to fully disable log. (Not Implemented)|
-|-lower | \(optional\) force output filenames to be lowercase.|
-|-upper | \(optional\) force output filenames to be UPPERCASE.|
+|--filter:\<table_filter\> | \(optional\) Filters output tables to match provided string. (case in-sensitive)|
+|--nolog | \(optional\) disables the runtime log. Set this as very first parameter to fully disable log. (Not Implemented)|
+|--lower | \(optional\) force output filenames to be lowercase.|
+|--upper | \(optional\) force output filenames to be UPPERCASE.|
 |--add-date | \(optional\) Appends source file create date to output file(s).|
 |--add-filename | \(optional\) Adds source filename as last field in output file(s).|
 |-p | \(optional\) use PIPE '\|' Delimiter in output file.|
 |-t | \(optional\) use TAB Delimiter in output file.|
-|-clean | \(optional\) Clean Fieldnames. Replaces all symbol chars with '_' and convert FieldName to UPPER case|
-|-debug | \(optional\) enables debug 'verbose' mode.|
-|--archive| \(optional\) Archives as the source file as zip and delete. Only triggered if output was successfull|
+|--clean | \(optional\) Clean Fieldnames. Replaces all symbol chars with '_' and convert FieldName to UPPER case.|
+|--debug | \(optional\) enables debug 'verbose' mode.|
+|--no-archive| \(optional\) Disables the Archive option, even if enabled in .config file.|
 
 **Example**
 
